@@ -1,3 +1,5 @@
+import seedrandom from 'seedrandom';
+
 export class Life {
     private width: number;
     private height: number;
@@ -117,7 +119,7 @@ export class Life {
     setDecay(decay: boolean) {
         this.decay = decay;
     }
-    
+
     getBoard(): number[] {
         return this.board.slice();
     }
@@ -132,6 +134,26 @@ export class Life {
 
     getDecay(): boolean {
         return this.decay;
+    }
+
+    randomizeFromSeed(seed: number): number[] {
+        let rng = seedrandom(seed.toString());
+        this.population = 0;
+
+        this.visit((x: number, y: number) => {
+            // 1 in 4 whether a cell is alive; if it is, it has a random color
+            const alive = Math.floor(rng() * 4) === 0;
+            const color = Math.floor(rng() * this.colors) + 1;
+            const state = alive ? color : 0;
+
+            if (state) {
+                this.population++;
+            }
+
+            this.board[this.index(x, y)] = state;
+        });
+
+        return this.getBoard();
     }
 
     randomize(): number[] {
@@ -178,7 +200,7 @@ export class Life {
 
             // two colors: newborns are the majority color of the parents
             case 2: {
-                const count: number[] = [ 0, 0 ];
+                const count: number[] = [0, 0];
 
                 for (let color of neighbors) {
                     if (color && ++count[color - 1] == 2) {
@@ -193,7 +215,7 @@ export class Life {
             // there is a majority; otherwise its the fourth color (the color
             // that no parent has)
             case 4: {
-                const count: number[] = [ 0, 0, 0, 0 ];
+                const count: number[] = [0, 0, 0, 0];
 
                 for (let color of neighbors) {
                     if (color && ++count[color - 1] == 2) {

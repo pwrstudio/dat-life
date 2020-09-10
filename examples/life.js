@@ -41,7 +41,8 @@ for (let i = 2; i < process.argv.length; i++) {
     }
 }
 
-life.randomize();
+// life.randomize();
+life.randomizeFromSeed(111111101010111);
 
 draw(life);
 
@@ -72,7 +73,7 @@ function draw(life) {
         process.stdout.write('\n');
     }
 
-    process.stdout.write(`Generation: ${life.getGeneration()} / Population: ${life.getPopulation()}`); 
+    process.stdout.write(`Generation: ${life.getGeneration()} / Population: ${life.getPopulation()}`);
 
     life.next();
     setTimeout(draw, delay, life);
