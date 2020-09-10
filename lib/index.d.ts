@@ -1,0 +1,35 @@
+export declare class Life {
+    private width;
+    private height;
+    private colors;
+    private decay;
+    private board;
+    private generation;
+    private population;
+    constructor(width?: number, height?: number);
+    setWidth(width: number): void;
+    setHeight(height: number): void;
+    setColors(colors: number): void;
+    getWidth(): number;
+    getHeight(): number;
+    getColors(): number;
+    private createBoard;
+    visit(visitor: (x: number, y: number) => void): void;
+    private index;
+    private reset;
+    clear(): number[];
+    set(x: number, y: number, state: number): void;
+    get(x: number, y: number): number;
+    setBoard(board: number[]): void;
+    setDecay(decay: boolean): void;
+    getBoard(): number[];
+    getPopulation(): number;
+    getGeneration(): number;
+    getDecay(): boolean;
+    randomizeFromSeed(seed: number): number[];
+    randomize(): number[];
+    private neighbors;
+    private getColor;
+    private diminish;
+    next(): number[];
+}
